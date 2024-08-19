@@ -13,6 +13,7 @@ const Quiz: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false); // Add a state to handle submission
 
   useEffect(() => {
+
     const fetchQuestions = async () => {
       try {
         const response = await axios.get('https://opentdb.com/api.php?amount=10&category=21&difficulty=easy', {

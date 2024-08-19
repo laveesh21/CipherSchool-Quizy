@@ -7,6 +7,7 @@ import LogIn from './pages/Auth/Login';
 import SignUp from './pages/Auth/Signup';
 import EditProfile from './pages/ProfilePage/EditProfile';
 import Quiz from './pages/Quiz';
+import Permission from './pages/Permission';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/permission" element={<Permission />} />
             <Route path="/profile/*" element={<Profile />} />
             <Route path="/profile/:id/edit/*" element={<EditProfile />} />
             <Route path="/auth/log_in" element={<LogIn />} />
