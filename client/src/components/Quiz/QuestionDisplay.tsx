@@ -4,7 +4,7 @@ import Question from "../../types/Question.types";
 interface QuestionDisplayProps {
   question: Question;
   currentQuestionIndex: number;
-  setCurrentQuestionIndex: (index: number) => void;
+  setCurrentQuestionIndex: (index: number | ((prevIndex: number) => number)) => void;
   selectedAnswer: string | null;
   onSelectAnswer: (answer: string) => void;
 }

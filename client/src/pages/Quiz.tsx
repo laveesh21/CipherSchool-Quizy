@@ -6,6 +6,12 @@ import QuestionDisplay from "../components/Quiz/QuestionDisplay";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from 'jwt-decode'
 
+interface DecodedToken {
+  _id: string
+  email: string
+  username: string
+}
+
 
 const Quiz: React.FC = () => {
   const domain = import.meta.env.VITE_SERVER_URL as string
@@ -31,7 +37,7 @@ const Quiz: React.FC = () => {
     });
 
     const token = localStorage.getItem('token');
-    const userId = token ? jwtDecode(token)._id : null;
+    const userId = token ? jwtDecode<DecodedToken>(token)._id : null;
     console.log(userId)
     if (!userId) {
       alert("User ID not found. Please log in.");
