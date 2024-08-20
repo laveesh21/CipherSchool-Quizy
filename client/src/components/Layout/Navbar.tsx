@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
 
 
   return (
-    <div className="w-full bg-zinc-800 h-12 flex justify-between items-center p-4 border-b border-gray-700">
+    <div className="w-full bg-zinc-950 h-12 flex justify-between items-center p-4 border-b border-gray-700">
       <Link to="/" className="flex items-center" id="logo">
         <div className="text-2xl text-green-500 font-bold">Quizy</div>
       </Link>

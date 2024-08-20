@@ -7,6 +7,7 @@ import connectDb from "./config/database.js";
 import AuthenticatorRouter from "./routes/auth-router.js";
 import UserRouter from "./routes/user-router.js";
 import TestRouter from "./routes/test-router.js"
+import './utils/cronJobs.js'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
