@@ -6,6 +6,7 @@ import cors from "cors";
 import connectDb from "./config/database.js";
 import AuthenticatorRouter from "./routes/auth-router.js";
 import UserRouter from "./routes/user-router.js";
+import TestRouter from "./routes/test-router.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,7 +16,8 @@ app.use(bodyParser.json());
 
 // Routers to be used by app
 app.use("/auth", AuthenticatorRouter);
-app.use("/user", UserRouter);
+app.use("/profile", UserRouter);
+app.use("/test", TestRouter);
 
 // Server Listening on PORT
 connectDb().then(() => {
