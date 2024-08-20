@@ -4,8 +4,11 @@ import Question from "../types/Question.types";
 import QuestionsList from "../components/Quiz/QuestionList";
 import QuestionDisplay from "../components/Quiz/QuestionDisplay";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode'
+
 
 const Quiz: React.FC = () => {
+  const domain = import.meta.env.VITE_SERVER_URL as string
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -14,18 +17,36 @@ const Quiz: React.FC = () => {
   const [cameraGranted, setCameraGranted] = useState<boolean>(false);
   const navigate = useNavigate()
 
+
+
   const handleSubmitButton = async () => {
-    let score = 0;
-    questions.forEach((question, index) => {
-      if (selectedAnswers[index] === question.correct_answer) {
-        score++;
-      }
+    const questionData = questions.map((question, index) => {
+      return {
+        questionText: question.question, // The question text
+        correctAnswer: question.correct_answer, // The correct answer
+        selectedAnswer: selectedAnswers[index] || "", // The answer selected by the user
+        options: [question.correct_answer, ...question.incorrect_answers], // Combine correct and incorrect answers as options
+
+      };
     });
 
+    const token = localStorage.getItem('token');
+    const userId = token ? jwtDecode(token)._id : null;
+    console.log(userId)
+    if (!userId) {
+      alert("User ID not found. Please log in.");
+      return;
+    }
     // Send the score to the backend
     try {
       // -------------------------------------------------MAKE ROUTE TO HANDLE SCORE
-      await axios.post('/api/submit-score', { score });
+      { console.log("Sending Data...") }
+      await axios.post(`${domain}/test/submit`, {
+        userId,
+        questions: questionData
+      });
+
+      navigate('/finish')
 
     } catch (error) {
       console.error("Error submitting score:", error);
@@ -38,8 +59,8 @@ const Quiz: React.FC = () => {
       try {
         const response = await axios.get('https://opentdb.com/api.php', {
           params: {
-            amount: 10,  // Number of questions
-            type: 'multiple'  // Multiple-choice questions
+            amount: 10,
+            type: 'multiple'
           }
         });
         setQuestions(response.data.results);
@@ -71,8 +92,6 @@ const Quiz: React.FC = () => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentQuestionIndex] = answer;
     setSelectedAnswers(newAnswers);
-    // ---------------------------------------------------------------Vgc
-    console.log(selectedAnswers)
   };
 
   return (
