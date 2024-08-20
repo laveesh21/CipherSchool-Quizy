@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const LogIn: React.FC = () => {
-  const domain = import.meta.env.SERVER_URL as string;
-  const [username, setUsername] = useState<string>("");
+  const domain = import.meta.env.VITE_SERVER_URL as string;
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [myerror, setError] = useState<number>(0);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${domain}/user/login`, {
-        username,
+      const response = await axios.post(`${domain}/auth/login`, {
+        email,
         password,
       });
 
@@ -37,11 +37,11 @@ const LogIn: React.FC = () => {
             <input
               type="text"
               name="username"
-              placeholder="Username"
+              placeholder="Email"
               className="w-full h-full p-5 rounded-full bg-transparent text-white border-2 border-gray-400 placeholder-gray-400 focus:border-white"
               id="usernameInput"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>

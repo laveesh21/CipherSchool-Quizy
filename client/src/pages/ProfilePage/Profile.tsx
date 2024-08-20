@@ -8,7 +8,7 @@ import axios from 'axios'
 
 const Profile: React.FC = () => {
 
-  const domain = import.meta.env.VITE_REACT_APP_DOMAIN as string;
+  const domain = import.meta.env.VITE_SERVER_URL as string;
   const [user, setUser] = useState<User>({} as User)
 
   const location = useLocation();
@@ -24,8 +24,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-center gap-5">
-      <div className="w-[960px] bg-gray-900 flex justify-center mt-5">
-
+      <div className="w-[960px] bg-zinc-100 flex justify-center mt-5">
         <div className="w-[960px] h-auto mb-20">
           <Routes>
             <Route path={`/:id`} element={<ProfileCard userData={user} />} />

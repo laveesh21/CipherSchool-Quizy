@@ -3,6 +3,7 @@ import axios from "axios";
 import Question from "../types/Question.types";
 import QuestionsList from "../components/Quiz/QuestionList";
 import QuestionDisplay from "../components/Quiz/QuestionDisplay";
+import { useNavigate } from "react-router-dom";
 
 const Quiz: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -11,8 +12,25 @@ const Quiz: React.FC = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [cameraGranted, setCameraGranted] = useState<boolean>(false);
+  const navigate = useNavigate()
 
-  const handleSubmitButton = () => {
+  const handleSubmitButton = async () => {
+    let score = 0;
+    questions.forEach((question, index) => {
+      if (selectedAnswers[index] === question.correct_answer) {
+        score++;
+      }
+    });
+
+    // Send the score to the backend
+    try {
+      // -------------------------------------------------MAKE ROUTE TO HANDLE SCORE
+      await axios.post('/api/submit-score', { score });
+
+    } catch (error) {
+      console.error("Error submitting score:", error);
+      alert("There was an error submitting your score. Please try again.");
+    }
   }
 
   useEffect(() => {
@@ -53,6 +71,8 @@ const Quiz: React.FC = () => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentQuestionIndex] = answer;
     setSelectedAnswers(newAnswers);
+    // ---------------------------------------------------------------Vgc
+    console.log(selectedAnswers)
   };
 
   return (
@@ -60,7 +80,6 @@ const Quiz: React.FC = () => {
       {loading ? <p>Loading...</p> :
         <>
           <div className="flex">
-            <button onClick={handleSubmitButton} className="mx-6 w-[150px] bg-red-500 text-white text-xl rounded-md  py-4 font-semibold">Submit</button>
             <QuestionsList questions={questions} currentQuestionIndex={currentQuestionIndex} setCurrentQuestionIndex={setCurrentQuestionIndex} />
 
             <QuestionDisplay
@@ -70,6 +89,9 @@ const Quiz: React.FC = () => {
               selectedAnswer={selectedAnswers[currentQuestionIndex] || null}
               onSelectAnswer={handleSelectAnswer}
             />
+          </div>
+          <div className="mt-8 ms-16">
+            <button onClick={handleSubmitButton} className="mx-6 w-[150px] bg-red-500 text-white text-xl rounded-md  py-4 font-semibold">Submit</button>
           </div>
 
         </>

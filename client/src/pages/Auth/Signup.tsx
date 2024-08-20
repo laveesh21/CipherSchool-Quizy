@@ -22,7 +22,7 @@ const SignUp: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${domain}/user/register`, {
+      const response = await axios.post(`${domain}/auth/register`, {
         username,
         email,
         password,
