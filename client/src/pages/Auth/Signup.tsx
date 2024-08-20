@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const inputBorder = "w-full p-2 px-5 rounded-full bg-transparent border-2 border-gray-400 text-white placeholder-gray-400 focus:border-gray-400 focus:outline-none";
 
 const SignUp: React.FC = () => {
-  const domain = import.meta.env.URL as string;
+  const domain = import.meta.env.VITE_SERVER_URL as string;
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [fullname, setFullname] = useState<string>('');

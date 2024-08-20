@@ -25,6 +25,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({
           </li>
         ))}
       </ul>
+
     </div>
   );
 };

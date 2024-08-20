@@ -29,6 +29,7 @@ const Permission: React.FC = () => {
     };
 
     requestPermissions();
+
   }, []);
 
   const handleStartTest = () => {

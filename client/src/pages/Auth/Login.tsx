@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const LogIn: React.FC = () => {
-  const domain = import.meta.env.URL as string;
+  const domain = import.meta.env.SERVER_URL as string;
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [myerror, setError] = useState<number>(0);
