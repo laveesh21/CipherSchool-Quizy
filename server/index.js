@@ -12,7 +12,7 @@ import './utils/cronJobs.js'
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(cors({
-  origin: 'https://cipherschool-quizy.onrender.com'
+  origin: process.env.CLIENT_URL
 }));
 app.use(bodyParser.json());
 
