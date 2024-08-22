@@ -134,4 +134,4 @@ const evaluateTestResults = async () => {
   }
 };
 
-cron.schedule('0 * * * *', evaluateTestResults);
+cron.schedule('* * * * *', evaluateTestResults);

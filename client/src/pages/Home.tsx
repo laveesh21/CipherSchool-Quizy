@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import QuizImg from "../assets/quiz.jpg";
+import QuizImg from "../assets/quizy_wallpaper.jpg";
 
 const Home: React.FC = () => {
   return (

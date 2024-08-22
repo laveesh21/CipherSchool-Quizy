@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Permission: React.FC = () => {
   const [cameraGranted, setCameraGranted] = useState<boolean>(false);
   const [micGranted, setMicGranted] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const location = useLocation()
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -17,8 +20,10 @@ const Permission: React.FC = () => {
 
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
+
         }
 
+        streamRef.current = stream;
         setCameraGranted(true);
         setMicGranted(true);
       } catch (error) {
@@ -30,7 +35,13 @@ const Permission: React.FC = () => {
 
     requestPermissions();
 
-  }, []);
+    return () => {
+      // Stop the video stream when the component unmounts or the route changes
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [location]);
 
   const handleStartTest = () => {
     if (cameraGranted && micGranted) {
